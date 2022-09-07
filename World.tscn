@@ -1,0 +1,60 @@
+[gd_scene load_steps=9 format=3 uid="uid://cdlktuimaldao"]
+
+[ext_resource type="PackedScene" uid="uid://dkbu12bj0v7gi" path="res://Player.tscn" id="1_0uv75"]
+[ext_resource type="PackedScene" uid="uid://dx55gjyss5dha" path="res://NPC.tscn" id="2_iervq"]
+[ext_resource type="Texture2D" uid="uid://d3b7x27imsrg1" path="res://Textures/Tiles.png" id="2_sf08y"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e7pvt"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_odg75"]
+sky_material = SubResource("ProceduralSkyMaterial_e7pvt")
+
+[sub_resource type="Environment" id="Environment_q4ebn"]
+background_mode = 2
+sky = SubResource("Sky_odg75")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_maxhd"]
+flip_faces = true
+size = Vector3(1000, 1000, 1000)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_el5l4"]
+albedo_texture = ExtResource("2_sf08y")
+uv1_triplanar = true
+uv1_triplanar_sharpness = 100.0
+uv1_world_triplanar = true
+texture_filter = 4
+
+[node name="World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_q4ebn")
+
+[node name="WorldBox" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("BoxMesh_maxhd")
+skeleton = NodePath("")
+
+[node name="DirectionalLight3d" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_blend_splits = true
+
+[node name="Player" parent="." instance=ExtResource("1_0uv75")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.209592, 3.30397, 4.46938)
+
+[node name="CsgCombiner3d" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_el5l4")
+snap = 0.01
+use_collision = true
+
+[node name="CsgBox3d" type="CSGBox3D" parent="CsgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9, 0)
+size = Vector3(30, 20, 30)
+
+[node name="NPC" parent="." instance=ExtResource("2_iervq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.51775, 2, -8.82526)
