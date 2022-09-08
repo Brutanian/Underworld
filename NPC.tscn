@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://dx55gjyss5dha"]
+[gd_scene load_steps=18 format=3 uid="uid://dx55gjyss5dha"]
 
 [ext_resource type="Script" path="res://NPC.gd" id="1_4f028"]
 [ext_resource type="PackedScene" uid="uid://ban8t7ids6812" path="res://ReadText.tscn" id="2_87ceq"]
+[ext_resource type="Script" path="res://ScaleFollow.gd" id="3_n32sn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iktxq"]
 
@@ -128,6 +129,8 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_0cxgj"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_kdeo7"]
+
 [node name="NPC" type="StaticBody3D"]
 script = ExtResource("1_4f028")
 Prompt = "Talk"
@@ -173,6 +176,12 @@ tree_root = SubResource("AnimationNodeStateMachine_ymcww")
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource("AnimationNodeStateMachinePlayback_0cxgj")
+
+[node name="ScaleFollow" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_kdeo7")
+script = ExtResource("3_n32sn")
+BoundPoint = Vector3(1, 1, 1)
+Offset = Vector3(0, 0, 0)
 
 [connection signal="LineRead" from="ReadText" to="." method="LineRead"]
 [connection signal="Selected" from="ReadText" to="." method="Select"]

@@ -181,3 +181,6 @@ func GlobalAction(Command : Array):
 
 func Check(ID : String = "") -> bool:
 	return false
+
+func get_aabb(): #Return Useable AABB for Scale Follow
+	return AABB()

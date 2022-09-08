@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cdlktuimaldao"]
+[gd_scene load_steps=10 format=3 uid="uid://cdlktuimaldao"]
 
 [ext_resource type="PackedScene" uid="uid://dkbu12bj0v7gi" path="res://Player.tscn" id="1_0uv75"]
 [ext_resource type="PackedScene" uid="uid://dx55gjyss5dha" path="res://NPC.tscn" id="2_iervq"]
@@ -17,6 +17,13 @@ sky = SubResource("Sky_odg75")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vv2ns"]
+albedo_color = Color(0.0156863, 0.168627, 0.286275, 1)
+albedo_texture = ExtResource("2_sf08y")
+uv1_scale = Vector3(0.03, 0.03, 0.03)
+uv1_triplanar = true
+texture_filter = 2
+
 [sub_resource type="BoxMesh" id="BoxMesh_maxhd"]
 flip_faces = true
 size = Vector3(1000, 1000, 1000)
@@ -34,6 +41,7 @@ texture_filter = 4
 environment = SubResource("Environment_q4ebn")
 
 [node name="WorldBox" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_vv2ns")
 cast_shadow = 0
 mesh = SubResource("BoxMesh_maxhd")
 skeleton = NodePath("")
@@ -47,7 +55,6 @@ directional_shadow_blend_splits = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.209592, 3.30397, 4.46938)
 
 [node name="CsgCombiner3d" type="CSGCombiner3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_el5l4")
 snap = 0.01
 use_collision = true
@@ -55,6 +62,10 @@ use_collision = true
 [node name="CsgBox3d" type="CSGBox3D" parent="CsgCombiner3d"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9, 0)
 size = Vector3(30, 20, 30)
+
+[node name="CsgBox3d2" type="CSGBox3D" parent="CsgCombiner3d"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30, 0, 0)
+size = Vector3(30, 2, 10)
 
 [node name="NPC" parent="." instance=ExtResource("2_iervq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.51775, 2, -8.82526)
